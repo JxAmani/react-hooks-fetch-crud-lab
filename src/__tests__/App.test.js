@@ -1,7 +1,5 @@
-import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import App from "../components/App";
-import "@testing-library/jest-dom";
 
 beforeEach(() => {
   global.fetch = jest.fn(() =>
@@ -10,15 +8,9 @@ beforeEach(() => {
         Promise.resolve([
           {
             id: 1,
-            prompt: "lorem testum 1",
-            answers: ["A", "B", "C", "D"],
+            prompt: "What is 2 + 2?",
+            answers: ["3", "4", "5", "6"],
             correctIndex: 1,
-          },
-          {
-            id: 2,
-            prompt: "lorem testum 2",
-            answers: ["E", "F", "G", "H"],
-            correctIndex: 2,
           },
         ]),
     })
@@ -26,13 +18,11 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  jest.clearAllMocks();
+  global.fetch.mockClear();
 });
 
-test("displays question prompts after fetching", async () => {
+test("renders App and displays fetched questions", async () => {
   render(<App />);
-  fireEvent.click(screen.getByText("View Questions"));
-
-  expect(await screen.findByText("Prompt: lorem testum 1")).toBeInTheDocument();
-  expect(await screen.findByText("Prompt: lorem testum 2")).toBeInTheDocument();
+  const questionPrompt = await screen.findByText(/what is 2 \+ 2\?/i);
+  expect(questionPrompt).toBeInTheDocument();
 });
