@@ -1,4 +1,6 @@
-import { setupServer } from 'msw/node'
-import { handlers } from './handlers'
+// src/mocks/server.js
+import { setupServer } from "msw/node";
+import { handlers } from "./handlers";
 
-export const server = setupServer(...handlers)
+// Setup and export the server instance
+export const server = setupServer(...handlers);
